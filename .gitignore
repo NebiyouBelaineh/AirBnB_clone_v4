@@ -1,5 +1,7 @@
 file.json
 test_get_count.py
+requirements.txt
+100-dump.sql
 flask/
 # Byte-compiled / optimized / DLL files
 __pycache__/
