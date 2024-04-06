@@ -17,8 +17,8 @@ $(function () {
       selectItems.push(value);
     });
     const desiredWidthInner = $('.amenities').width();
-    //console.log('Width of .amenities', desiredWidthInner);
-    //const desiredWidth = 37;
+    // console.log('Width of .amenities', desiredWidthInner);
+    // const desiredWidth = 37;
     const toPrint = selectItems.join(', ');
     // if (toPrint.length > desiredWidth) {
     //   $('.amenities > h4').html(toPrint.slice(0, desiredWidth) + '...');
@@ -27,16 +27,13 @@ $(function () {
     //   $('.amenities > h4').html(toPrint);
     //   console.log(toPrint);
     // }
-	max_length = 0;
-	while ($(".amenities h4").html(toPrint.substring(0, max_length)).width() <= desiredWidthInner && max_length < toPrint.length)
-		max_length+=1
-	if ($(".amenities h4").html(toPrint.substring(0, max_length)).width() <= $(".amenities").width())
-	{
-		$(".amenities h4").html(toPrint)
-	}else{
-		max_length-=3
-		$(".amenities h4").html(toPrint.substring(0, max_length)+ "...")
-	}
-	
-	});
+    let maxLength = 0;
+    while ($('.amenities h4').html(toPrint.substring(0, maxLength)).width() <= desiredWidthInner && maxLength < toPrint.length) { maxLength += 1; }
+    if ($('.amenities h4').html(toPrint.substring(0, maxLength)).width() <= $('.amenities').width()) {
+      $('.amenities h4').html(toPrint);
+    } else {
+      maxLength -= 3;
+      $('.amenities h4').html(toPrint.substring(0, maxLength) + '...');
+    }
+  });
 });
