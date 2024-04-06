@@ -8,4 +8,17 @@ header .logo {
     background: url("../images/logo.png") no-repeat;
     left: 20px;
     height: 100%;
+    display: flex;
+    align-items: center;
+}
+header #api_status {
+    background-color: #CCCCCC;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    right: 30px;
+    position: absolute;
+}
+header #api_status.available {
+    background-color: #ff545f;
 }
