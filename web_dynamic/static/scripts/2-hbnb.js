@@ -27,10 +27,29 @@ $(function () {
       $('.amenities h4').html(toPrint.substring(0, maxLength) + '...');
     }
   });
-  const apiUrl = 'http://localhost:5001/api/v1/status/';
-  $.get(apiUrl, function (response) {
-    if (response.status === 'OK') {
-      $('div#api_status').addClass('available');
-    }
-  });
+
+  function statusCheck(){
+	const apiUrl = 'http://localhost:5001/api/v1/status/';
+  
+	$.ajax({
+	  url: apiUrl,
+	  timeout: 5000, // Set a reasonable timeout (e.g., 5 seconds)
+	})
+	  .done(function (data, textStatus, jqXHR) {
+		console.log('Server response:', data); // Log the response
+		$('div#api_status').addClass('available');
+	  })
+	  .fail(function (jqXHR, textStatus, errorThrown) {
+		if (textStatus === 'error' && errorThrown === 'net::ERR_CONNECTION_REFUSED') {
+		  console.error('Connection refused. Check if the server is running.');
+		} else {
+		  console.error('An error occurred:', textStatus, errorThrown);
+		}
+		$('div#api_status').removeClass('available');
+	  });
+  }
+  statusCheck()
+  setInterval(statusCheck, 5000); // Check server status every 1 second
+  
+  
 });
