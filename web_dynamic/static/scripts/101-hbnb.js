@@ -262,7 +262,6 @@ $(function () {
 					</li>
 				`;
             }
-			console.log(place.id);
             $('section.places').append(`<article>
                 <div class="title_box">
                     <h2>${place.name}</h2>
@@ -281,9 +280,9 @@ $(function () {
 				<div class=reviews>
 					<div class="review-head">
 					<h2>Reviews</h2>
-					<span data-place="${place.id}"> Hide </span>
+					<span  data-place-span="${place.id}"> Hide </span>
 					</div>
-					<ul>
+					<ul class="reviews-list" data-place="${place.id}">
 					${reviewsHtml}
 					</ul>
 				</div>
@@ -318,9 +317,36 @@ parentElement.addEventListener('click', function(event) {
     // Check if the clicked element matches the child selector
     if (event.target.matches(childSelector)) {
         // Your logic for when the child element is clicked
-        console.log('Child element clicked:', event.target);
-		console.log(event.target.getAttribute("data-place"));
-		console.log(event.target.getAttribute("data-place"));
+		if(event.target.textContent.trim() === "Hide"){
+			event.target.innerText = "Show";
+			$(`.reviews-list[data-place="${event.target.getAttribute("data-place-span")}"]`).empty();
+
+		}else if (event.target.textContent.trim() === "Show"){
+			event.target.innerText = "Hide";
+			const place_id = event.target.getAttribute("data-place-span");
+			$.ajax({
+				url: `http://localhost:5001/api/v1/places/${place_id}/reviews`,
+				type: 'GET',
+				dataType: 'json', // added data type
+				success: function(res) {
+					let reviewsHtml = "";
+					res.forEach((review)=>{
+						const dateString = review.created_at;
+						const { day, month, year } = getDateParts(dateString);
+						reviewsHtml += `
+						
+							<li>
+								<h3>From Max the ${day}th ${month} ${year}</h3>
+								<p>
+									${review.text}
+								</p>
+							</li>
+						`;
+					})
+					$(`.reviews-list[data-place="${event.target.getAttribute("data-place-span")}"]`).append(`${reviewsHtml}`)
+				}
+			});
+		}
     }
 });
   
