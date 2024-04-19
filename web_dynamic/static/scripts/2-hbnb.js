@@ -29,11 +29,11 @@ $(function () {
   });
 
   function statusCheck(){
-	const apiUrl = 'http://localhost:5001/api/v1/status/';
+	const apiUrl = 'http://34.207.237.37/api/v1/status/';
   
 	$.ajax({
 	  url: apiUrl,
-	  timeout: 5000, // Set a reasonable timeout (e.g., 5 seconds)
+	  timeout: 5000, // 
 	})
 	  .done(function (data, textStatus, jqXHR) {
 		console.log('Server response:', data); // Log the response
